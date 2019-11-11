@@ -1,0 +1,575 @@
+{
+    "AWSTemplateFormatVersion": "2010-09-09",
+    "Metadata": {
+        "AWS::CloudFormation::Designer": {
+            "0471ad14-0f5c-4332-b77f-b3bc2b7a704a": {
+                "size": {
+                    "width": 60,
+                    "height": 60
+                },
+                "position": {
+                    "x": 660,
+                    "y": 80
+                },
+                "z": 0,
+                "embeds": []
+            },
+            "2861157a-bbc2-4618-a2a5-d312f1fcd747": {
+                "size": {
+                    "width": 60,
+                    "height": 60
+                },
+                "position": {
+                    "x": 480,
+                    "y": 410
+                },
+                "z": 0,
+                "embeds": []
+            },
+            "d44e5d41-fabf-4f11-a1b9-aadcb7432318": {
+                "size": {
+                    "width": 60,
+                    "height": 60
+                },
+                "position": {
+                    "x": 660,
+                    "y": 160
+                },
+                "z": 0,
+                "embeds": []
+            },
+            "51c37f4a-2f45-49d0-943b-b59be47e71c6": {
+                "size": {
+                    "width": 60,
+                    "height": 60
+                },
+                "position": {
+                    "x": 660,
+                    "y": 240
+                },
+                "z": 0,
+                "embeds": []
+            },
+            "a8b97ec1-7fea-499f-874e-827c7ef0331a": {
+                "size": {
+                    "width": 60,
+                    "height": 60
+                },
+                "position": {
+                    "x": 880,
+                    "y": 80
+                },
+                "z": 0,
+                "embeds": []
+            },
+            "ff1d5f2d-0ba9-4a1d-a57d-0c02e3029fe2": {
+                "size": {
+                    "width": 60,
+                    "height": 60
+                },
+                "position": {
+                    "x": 610,
+                    "y": 310
+                },
+                "z": 0,
+                "embeds": [],
+                "isassociatedwith": [
+                    "a74374da-0c37-4be5-ad11-3c7a21f92ad8"
+                ]
+            },
+            "a74374da-0c37-4be5-ad11-3c7a21f92ad8": {
+                "size": {
+                    "width": 60,
+                    "height": 60
+                },
+                "position": {
+                    "x": 880,
+                    "y": 160
+                },
+                "z": 0,
+                "embeds": []
+            },
+            "e9fc8af1-dc0c-4ddb-8402-c6782cd0b30b": {
+                "size": {
+                    "width": 60,
+                    "height": 60
+                },
+                "position": {
+                    "x": 880,
+                    "y": 240
+                },
+                "z": 0,
+                "embeds": []
+            },
+            "21ad65bf-7311-448f-8662-c7ffaba3e4b2": {
+                "size": {
+                    "width": 60,
+                    "height": 60
+                },
+                "position": {
+                    "x": 880,
+                    "y": 320
+                },
+                "z": 0,
+                "embeds": []
+            }
+        }
+    },
+    "Resources": {
+        "DDBTAppConfig": {
+            "Type": "AWS::DynamoDB::Table",
+            "Properties": {
+                "AttributeDefinitions": [
+                    {
+                        "AttributeName": "confKey",
+                        "AttributeType": "S"
+                    }
+                ],
+                "BillingMode": "PAY_PER_REQUEST",
+                "KeySchema": [
+                    {
+                        "AttributeName": "confKey",
+                        "KeyType": "HASH"
+                    }
+                ],
+                "TableName": "AppConfig"
+            },
+            "Metadata": {
+                "AWS::CloudFormation::Designer": {
+                    "id": "0471ad14-0f5c-4332-b77f-b3bc2b7a704a"
+                }
+            }
+        },
+        "DDBTBatchRestoreBatch": {
+            "Type": "AWS::DynamoDB::Table",
+            "Properties": {
+                "AttributeDefinitions": [
+                    {
+                        "AttributeName": "batchId",
+                        "AttributeType": "S"
+                    }
+                ],
+                "BillingMode": "PAY_PER_REQUEST",
+                "GlobalSecondaryIndexes": [],
+                "KeySchema": [
+                    {
+                        "AttributeName": "batchId",
+                        "KeyType": "HASH"
+                    }
+                ],
+                "TableName": "BatchRestoreBatch"
+            },
+            "Metadata": {
+                "AWS::CloudFormation::Designer": {
+                    "id": "d44e5d41-fabf-4f11-a1b9-aadcb7432318"
+                }
+            }
+        },
+        "DDBTBatchRestoreObjects": {
+            "Type": "AWS::DynamoDB::Table",
+            "Properties": {
+                "AttributeDefinitions": [
+                    {
+                        "AttributeName": "id",
+                        "AttributeType": "S"
+                    },
+                    {
+                        "AttributeName": "batchId",
+                        "AttributeType": "S"
+                    }
+                ],
+                "BillingMode": "PAY_PER_REQUEST",
+                "GlobalSecondaryIndexes": [
+                    {
+                        "IndexName": "batchId-index",
+                        "KeySchema": [
+                            {
+                                "AttributeName": "batchId",
+                                "KeyType": "HASH"
+                            }
+                        ],
+                        "Projection": {
+                            "ProjectionType": "ALL"
+                        }
+                    }
+                ],
+                "KeySchema": [
+                    {
+                        "AttributeName": "id",
+                        "KeyType": "HASH"
+                    }
+                ],
+                "StreamSpecification": {
+                    "StreamViewType": "NEW_AND_OLD_IMAGES"
+                },
+                "TableName": "BatchRestoreObjects"
+            },
+            "Metadata": {
+                "AWS::CloudFormation::Designer": {
+                    "id": "51c37f4a-2f45-49d0-943b-b59be47e71c6"
+                }
+            }
+        },
+        "LFBatchRestoreRequest": {
+            "Type": "AWS::Lambda::Function",
+            "Properties": {
+                "Code": {
+                    "S3Bucket": {
+                        "Ref": "AssetsBucket"
+                    },
+                    "S3Key": "BatchRestore/lambda/batchrestore-request.zip"
+                },
+                "FunctionName": "batchrestoreRequest",
+                "Handler": "lambda_function.lambda_handler",
+                "MemorySize": 128,
+                "Role": {
+                    "Fn::GetAtt": [
+                        "IAMRBatchRestore",
+                        "Arn"
+                    ]
+                },
+                "Runtime": "python3.6",
+                "Timeout": 30
+            },
+            "Metadata": {
+                "AWS::CloudFormation::Designer": {
+                    "id": "a8b97ec1-7fea-499f-874e-827c7ef0331a"
+                }
+            }
+        },
+        "LFBatchRestoreRestore": {
+            "Type": "AWS::Lambda::Function",
+            "Properties": {
+                "Code": {
+                    "S3Bucket": {
+                        "Ref": "AssetsBucket"
+                    },
+                    "S3Key": "BatchRestore/lambda/batchrestore-restore.zip"
+                },
+                "FunctionName": "batchrestoreRestore",
+                "Handler": "lambda_function.lambda_handler",
+                "MemorySize": 128,
+                "Role": {
+                    "Fn::GetAtt": [
+                        "IAMRBatchRestore",
+                        "Arn"
+                    ]
+                },
+                "Runtime": "python3.6",
+                "Timeout": 60
+            },
+            "Metadata": {
+                "AWS::CloudFormation::Designer": {
+                    "id": "a74374da-0c37-4be5-ad11-3c7a21f92ad8"
+                }
+            }
+        },
+        "LFBatchRestoreMonitor": {
+            "Type": "AWS::Lambda::Function",
+            "Properties": {
+                "Code": {
+                    "S3Bucket": {
+                        "Ref": "AssetsBucket"
+                    },
+                    "S3Key": "BatchRestore/lambda/batchrestore-monitor.zip"
+                },
+                "FunctionName": "batchrestoreMonitor",
+                "Handler": "lambda_function.lambda_handler",
+                "MemorySize": 128,
+                "Role": {
+                    "Fn::GetAtt": [
+                        "IAMRBatchRestore",
+                        "Arn"
+                    ]
+                },
+                "Runtime": "python3.6",
+                "Timeout": 300
+            },
+            "Metadata": {
+                "AWS::CloudFormation::Designer": {
+                    "id": "e9fc8af1-dc0c-4ddb-8402-c6782cd0b30b"
+                }
+            }
+        },
+        "LFBatchRestoreState": {
+            "Type": "AWS::Lambda::Function",
+            "Properties": {
+                "Code": {
+                    "S3Bucket": {
+                        "Ref": "AssetsBucket"
+                    },
+                    "S3Key": "BatchRestore/lambda/batchrestore-state.zip"
+                },
+                "FunctionName": "batchrestoreState",
+                "Handler": "lambda_function.lambda_handler",
+                "MemorySize": 128,
+                "Role": {
+                    "Fn::GetAtt": [
+                        "IAMRBatchRestore",
+                        "Arn"
+                    ]
+                },
+                "Runtime": "python3.6",
+                "Timeout": 30
+            },
+            "Metadata": {
+                "AWS::CloudFormation::Designer": {
+                    "id": "21ad65bf-7311-448f-8662-c7ffaba3e4b2"
+                }
+            }
+        },
+        "IAMRBatchRestore": {
+            "Type": "AWS::IAM::Role",
+            "Properties": {
+                "AssumeRolePolicyDocument": {
+                    "Version": "2012-10-17",
+                    "Statement": [
+                        {
+                            "Effect": "Allow",
+                            "Principal": {
+                                "Service": "lambda.amazonaws.com"
+                            },
+                            "Action": "sts:AssumeRole"
+                        }
+                    ]
+                },
+                "ManagedPolicyArns": [
+                    {
+                        "Fn::FindInMap": [
+                            "LambdaVpcExecPolicy",
+                            {
+                                "Ref": "AWS::Region"
+                            },
+                            "Policy"
+                        ]
+                    }
+                ],
+                "Policies": [
+                    {
+                        "PolicyName": "dynamodb",
+                        "PolicyDocument": {
+                            "Version": "2012-10-17",
+                            "Statement": [
+                                {
+                                    "Sid": "TableIndexStreamAccess",
+                                    "Effect": "Allow",
+                                    "Action": [
+                                        "dynamodb:PutItem",
+                                        "dynamodb:DeleteItem",
+                                        "dynamodb:GetShardIterator",
+                                        "dynamodb:GetItem",
+                                        "dynamodb:Query",
+                                        "dynamodb:UpdateItem",
+                                        "dynamodb:DescribeStream",
+                                        "dynamodb:GetRecords"
+                                    ],
+                                    "Resource": [
+                                        {
+                                            "Fn::GetAtt": [
+                                                "DDBTAppConfig",
+                                                "Arn"
+                                            ]
+                                        },
+                                        {
+                                            "Fn::GetAtt": [
+                                                "DDBTBatchRestoreBatch",
+                                                "Arn"
+                                            ]
+                                        },
+                                        {
+                                            "Fn::GetAtt": [
+                                                "DDBTBatchRestoreObjects",
+                                                "Arn"
+                                            ]
+                                        },
+                                        {
+                                            "Fn::Join": [
+                                                "/",
+                                                [
+                                                    {
+                                                        "Fn::GetAtt": [
+                                                            "DDBTBatchRestoreObjects",
+                                                            "Arn"
+                                                        ]
+                                                    },
+                                                    "index",
+                                                    "batchId-index"
+                                                ]
+                                            ]
+                                        },
+                                        {
+                                            "Fn::Join": [
+                                                "/",
+                                                [
+                                                    {
+                                                        "Fn::GetAtt": [
+                                                            "DDBTBatchRestoreObjects",
+                                                            "Arn"
+                                                        ]
+                                                    },
+                                                    "stream",
+                                                    "*"
+                                                ]
+                                            ]
+                                        }
+                                    ]
+                                },
+                                {
+                                    "Sid": "ListStreamsAll",
+                                    "Effect": "Allow",
+                                    "Action": "dynamodb:ListStreams",
+                                    "Resource": "*"
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "PolicyName": "eventbridge",
+                        "PolicyDocument": {
+                            "Version": "2012-10-17",
+                            "Statement": [
+                                {
+                                    "Sid": "EventRuleAndTarget",
+                                    "Effect": "Allow",
+                                    "Action": [
+                                        "events:PutTargets",
+                                        "events:DeleteRule",
+                                        "events:PutRule",
+                                        "events:RemoveTargets"
+                                    ],
+                                    "Resource": "*"
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "PolicyName": "lambda",
+                        "PolicyDocument": {
+                            "Version": "2012-10-17",
+                            "Statement": [
+                                {
+                                    "Sid": "LambdaPermission",
+                                    "Effect": "Allow",
+                                    "Action": [
+                                        "lambda:AddPermission",
+                                        "lambda:RemovePermission"
+                                    ],
+                                    "Resource": {
+                                        "Fn::Join": [
+                                            ":",
+                                            [
+                                                "arn",
+                                                {
+                                                    "Fn::FindInMap": [
+                                                        "AwsPartition",
+                                                        {
+                                                            "Ref": "AWS::Region"
+                                                        },
+                                                        "Partition"
+                                                    ]
+                                                },
+                                                "lambda",
+                                                {
+                                                    "Ref": "AWS::Region"
+                                                },
+                                                {
+                                                    "Ref": "AWS::AccountId"
+                                                },
+                                                "function",
+                                                "batchrestoreMonitor"
+                                            ]
+                                        ]
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "PolicyName": "s3",
+                        "PolicyDocument": {
+                            "Version": "2012-10-17",
+                            "Statement": [
+                                {
+                                    "Sid": "S3All",
+                                    "Effect": "Allow",
+                                    "Action": [
+                                        "s3:ListBucket",
+                                        "s3:GetObject",
+                                        "s3:RestoreObject"
+                                    ],
+                                    "Resource": "*"
+                                }
+                            ]
+                        }
+                    }
+                ]
+            },
+            "Metadata": {
+                "AWS::CloudFormation::Designer": {
+                    "id": "2861157a-bbc2-4618-a2a5-d312f1fcd747"
+                }
+            }
+        },
+        "LEBatchRestoreMonitor": {
+            "Type": "AWS::Lambda::EventSourceMapping",
+            "Properties": {
+                "BatchSize": 100,
+                "EventSourceArn": {
+                    "Fn::GetAtt": [
+                        "DDBTBatchRestoreObjects",
+                        "StreamArn"
+                    ]
+                },
+                "FunctionName": {
+                    "Ref": "LFBatchRestoreRestore"
+                },
+                "StartingPosition": "LATEST"
+            },
+            "Metadata": {
+                "AWS::CloudFormation::Designer": {
+                    "id": "ff1d5f2d-0ba9-4a1d-a57d-0c02e3029fe2"
+                }
+            }
+        }
+    },
+    "Mappings": {
+        "AwsPartition": {
+            "cn-north-1": {
+                "Partition": "aws-cn"
+            },
+            "cn-northwest-1": {
+                "Partition": "aws-cn"
+            },
+            "us-west-2": {
+                "Partition": "aws"
+            },
+            "ca-central-1": {
+                "Partition": "aws"
+            }
+        },
+        "LambdaVpcExecPolicy": {
+            "cn-north-1": {
+                "Policy": "arn:aws-cn:iam::aws:policy/service-role/AWSLambdaVPCAccessExecutionRole"
+            },
+            "cn-northwest-1": {
+                "Policy": "arn:aws-cn:iam::aws:policy/service-role/AWSLambdaVPCAccessExecutionRole"
+            },
+            "us-west-2": {
+                "Policy": "arn:aws:iam::aws:policy/service-role/AWSLambdaVPCAccessExecutionRole"
+            },
+            "ca-central-1": {
+                "Policy": "arn:aws:iam::aws:policy/service-role/AWSLambdaVPCAccessExecutionRole"
+            }
+        }
+    },
+    "Parameters": {
+        "AssetsBucket": {
+            "AllowedPattern": "[a-z0-9\\-]+",
+            "ConstraintDescription": "Bucket name is required to get packages for setup, and should match S3 naming limitation.",
+            "Description": "The S3 bucket that holding all setup assets. See README.md for details.",
+            "MinLength": 3,
+            "MaxLength": 63,
+            "Type": "String"
+        }
+    }
+}
