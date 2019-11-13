@@ -1,10 +1,8 @@
-S3 Batch Restore
-======
+# S3 Batch Restore
 
 This tool is for restoring archived objects in a given S3 bucket and prefix with one function call.
 
-Deploy
-------
+## Deploy
 
 It's recommended to deploy this application in the same region as the S3 bucket you want to work on.
 
