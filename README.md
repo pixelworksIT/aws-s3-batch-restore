@@ -53,7 +53,7 @@ s3://my_bucket/BatchRestore/lambda/******.zip
 
 ### Create the CloudFormation Stack
 
-It's simple. Go to CloudFormation web console. Click "Create Stack". Follow the instruction. When it asks input for `AssetsBucket`, please input the acture bucket name of `my_bucket`.
+It's simple. Go to CloudFormation web console. Click "Create Stack". Follow the instruction. The template file is `cf-template.json`. When it asks input for `AssetsBucket`, please input the acture bucket name of `my_bucket`.
 
 ### Some Default Configuration Items in DynamoDB Table `AppConfig`
 
@@ -72,7 +72,7 @@ You need to add following items to DynamoDB table `AppConfig` to make this appli
 Usage
 ------
 
-### batchrestoreRequest()
+### Function: batchrestoreRequest()
 
 This function is used to make a restore request for a specific S3 bucket and prefix.
 
@@ -161,7 +161,7 @@ print(result['Payload'].read().decode())
 
 ```
 
-### batchrestoreState()
+### Function: batchrestoreState()
 
 This function is used to query state of a restore request.
 
